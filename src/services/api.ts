@@ -18,6 +18,18 @@ import { localStore } from './localStore';
 import { saveUserToSupabase } from './supabase';
 
 async function safeFetch<T>(url: string, options?: RequestInit, fallback?: () => T): Promise<T> {
+  // If deployed to static hosts (like GitHub Pages) where there is no Express server, use offline fallback directly
+  const isStaticHosting =
+    typeof window !== 'undefined' &&
+    (window.location.hostname.endsWith('github.io') ||
+      window.location.protocol === 'file:' ||
+      window.location.hostname.includes('pages.dev') ||
+      window.location.hostname.includes('netlify.app'));
+
+  if (isStaticHosting && fallback) {
+    return fallback();
+  }
+
   try {
     const res = await fetch(url, options);
     if (!res.ok) {
