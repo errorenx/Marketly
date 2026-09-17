@@ -116,10 +116,10 @@ const INITIAL_USERS: User[] = [
     lastName: "Ahmed",
     username: "bilal_ahmed",
     email: "bilal@gmail.com",
-    role: "BUYER",
+    role: "SOCIAL",
     avatar: "https://images.unsplash.com/photo-1507003211169-0a1dd7228f2d?w=300&auto=format&fit=crop&q=80",
     bio: "Tech enthusiast, audiophile & gadget reviewer in Islamabad.",
-    description: "Love exploring new gadgets and sharing honest buyer experiences with the community.",
+    description: "Love exploring new gadgets and sharing honest community reviews.",
     country: "Pakistan",
     city: "Islamabad",
     followersCount: 430,
@@ -485,12 +485,12 @@ const INITIAL_POSTS: Post[] = [
     authorName: "Bilal Ahmed",
     authorUsername: "bilal_ahmed",
     authorAvatar: "https://images.unsplash.com/photo-1507003211169-0a1dd7228f2d?w=300&auto=format&fit=crop&q=80",
-    authorRole: "BUYER",
+    authorRole: "SOCIAL",
     authorCity: "Islamabad",
-    contentType: "buyer",
+    contentType: "social",
     mediaType: "photo",
     mediaUrl: "https://images.unsplash.com/photo-1587829741301-dc798b83add3?w=800&auto=format&fit=crop&q=80",
-    caption: "Hands-on review of Keychron K2 Pro received via Marketly COD! Delivered in 2 days to F-7 Islamabad. The tactile feel on Mac is sensational. Highly recommend checking seller ratings before ordering.",
+    caption: "Hands-on review of Keychron K2 Pro received via Marketly COD! Delivered in 2 days to F-7 Islamabad. The tactile feel on Mac is sensational.",
     likesCount: 88,
     commentsCount: 9,
     savesCount: 15,
@@ -583,9 +583,9 @@ const INITIAL_POSTS: Post[] = [
     authorName: "Bilal Ahmed",
     authorUsername: "bilal_ahmed",
     authorAvatar: "https://images.unsplash.com/photo-1507003211169-0a1dd7228f2d?w=300&auto=format&fit=crop&q=80",
-    authorRole: "BUYER",
+    authorRole: "SOCIAL",
     authorCity: "Islamabad",
-    contentType: "buyer",
+    contentType: "social",
     mediaType: "video",
     mediaUrl: "https://commondatastorage.googleapis.com/gtv-videos-bucket/sample/ForBiggerJoyBlazes.mp4",
     caption: "Mechanical keyboard typing ASMR video test. Gateron brown switches feel tactile without waking up the house. Delivery was fast and COD went smoothly.",
@@ -694,7 +694,7 @@ const INITIAL_CONVERSATIONS: Conversation[] = [
         name: "Bilal Ahmed",
         username: "bilal_ahmed",
         avatar: "https://images.unsplash.com/photo-1507003211169-0a1dd7228f2d?w=300&auto=format&fit=crop&q=80",
-        role: "BUYER",
+        role: "SOCIAL",
         isOnline: false,
         lastSeen: "10m ago",
       }
@@ -737,7 +737,7 @@ const INITIAL_CONVERSATIONS: Conversation[] = [
         name: "Bilal Ahmed",
         username: "bilal_ahmed",
         avatar: "https://images.unsplash.com/photo-1507003211169-0a1dd7228f2d?w=300&auto=format&fit=crop&q=80",
-        role: "BUYER",
+        role: "SOCIAL",
       },
       {
         id: "usr_social_1",
@@ -779,7 +779,7 @@ const INITIAL_CONVERSATIONS: Conversation[] = [
         name: "Bilal Ahmed",
         username: "bilal_ahmed",
         avatar: "https://images.unsplash.com/photo-1507003211169-0a1dd7228f2d?w=300&auto=format&fit=crop&q=80",
-        role: "BUYER",
+        role: "SOCIAL",
       },
       {
         id: "usr_social_1",
@@ -1255,22 +1255,18 @@ app.delete("/api/users/:id", (req, res) => {
   res.json({ success: true });
 });
 
-// 3. FEED & POSTS (ROLE PERMISSION RULES STRICTLY ENFORCED)
+// 3. FEED & POSTS (SELLER AND SOCIAL ONLY)
 app.get("/api/feed", (req, res) => {
-  const role = (req.query.role as UserRole) || "BUYER";
+  const role = (req.query.role as UserRole) || "SELLER";
   const tab = (req.query.tab as string)?.toLowerCase();
 
-  // Permitted content rules:
-  // - SELLER role can see: 'buyer', 'seller', 'social'
-  // - BUYER role can see: 'seller', 'buyer', 'social'
-  // - SOCIAL role can see: 'social' only (BUYER & SELLER ARE STRICTLY FORBIDDEN!)
   let allowedTypes: string[] = [];
   if (role === "SELLER" || role === "ADMIN") {
-    allowedTypes = ["buyer", "seller", "social"];
-  } else if (role === "BUYER") {
-    allowedTypes = ["seller", "buyer", "social"];
+    allowedTypes = ["seller", "social"];
   } else if (role === "SOCIAL") {
-    allowedTypes = ["social"]; // Social only! Buyer & Seller are strictly forbidden
+    allowedTypes = ["social"];
+  } else {
+    allowedTypes = ["seller", "social"];
   }
 
   let posts = db.posts.filter(p => allowedTypes.includes(p.contentType));
@@ -1285,18 +1281,18 @@ app.get("/api/feed", (req, res) => {
   res.json({ posts });
 });
 
-// Dedicated Video Feed endpoint with strict database/query level role filtering (one-video-at-a-time TikTok model)
+// Dedicated Video Feed endpoint
 app.get("/api/feed/videos", (req, res) => {
-  const role = (req.query.role as UserRole) || "BUYER";
+  const role = (req.query.role as UserRole) || "SELLER";
   const tab = (req.query.tab as string)?.toLowerCase();
 
   let allowedTypes: string[] = [];
   if (role === "SELLER" || role === "ADMIN") {
-    allowedTypes = ["buyer", "seller", "social"];
-  } else if (role === "BUYER") {
-    allowedTypes = ["seller", "buyer", "social"];
+    allowedTypes = ["seller", "social"];
   } else if (role === "SOCIAL") {
-    allowedTypes = ["social"]; // Social user can NEVER receive Buyer or Seller posts!
+    allowedTypes = ["social"];
+  } else {
+    allowedTypes = ["seller", "social"];
   }
 
   let videoPosts = db.posts.filter(p => p.mediaType === "video" && allowedTypes.includes(p.contentType));
@@ -1336,14 +1332,10 @@ app.post("/api/posts", (req, res) => {
   if (!user) return res.status(401).json({ error: "User not found" });
 
   // Role validation on posting categories:
-  // - SELLER can post: 'seller', 'social' (CANNOT post 'buyer')
-  // - BUYER can post: 'buyer', 'social' (CANNOT post 'seller')
+  // - SELLER can post: 'seller', 'social'
   // - SOCIAL can post: 'social' ONLY
   if (user.role === "SELLER" && !["seller", "social"].includes(contentType)) {
     return res.status(403).json({ error: "Sellers can only post to SELLER or SOCIAL categories." });
-  }
-  if (user.role === "BUYER" && !["buyer", "social"].includes(contentType)) {
-    return res.status(403).json({ error: "Buyers can only post to BUYER or SOCIAL categories." });
   }
   if (user.role === "SOCIAL" && contentType !== "social") {
     return res.status(403).json({ error: "Social users can only post to SOCIAL category." });
@@ -2616,7 +2608,7 @@ app.get("/api/admin/dashboard", (req, res) => {
   const totalUsers = db.users.length;
   const activeUsers = db.users.filter(u => !u.isDeactivated).length;
   const sellers = db.users.filter(u => u.role === "SELLER").length;
-  const buyers = db.users.filter(u => u.role === "BUYER").length;
+  const buyers = 0;
   const socialUsers = db.users.filter(u => u.role === "SOCIAL").length;
   const activeSubscriptions = Object.values(db.subscriptions).filter(s => s.status === "active").length;
   const trialSellers = Object.values(db.subscriptions).filter(s => s.status === "trial_active").length;

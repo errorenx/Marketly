@@ -256,8 +256,6 @@ export const VideoFeed: React.FC<VideoFeedProps> = ({
               className={`text-[10px] font-black uppercase px-2.5 py-1 rounded-full border backdrop-blur-md shadow ${
                 activeVideo.contentType === 'seller'
                   ? 'bg-violet-600/80 text-white border-violet-400/40'
-                  : activeVideo.contentType === 'buyer'
-                  ? 'bg-indigo-600/80 text-white border-indigo-400/40'
                   : 'bg-slate-800/80 text-slate-200 border-slate-600/40'
               }`}
             >

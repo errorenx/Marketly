@@ -85,7 +85,7 @@ export const ChatsView: React.FC<ChatsViewProps> = ({
     name: 'Marketly User',
     username: 'user',
     avatar: 'https://images.unsplash.com/photo-1535713875002-d1d0cf377fde?w=100&auto=format&fit=crop&q=80',
-    role: 'BUYER',
+    role: 'SOCIAL',
     isOnline: true,
   };
 
@@ -241,7 +241,7 @@ export const ChatsView: React.FC<ChatsViewProps> = ({
         prev
           ? {
               ...prev,
-              socialRequestStatus: res.status,
+              socialRequestStatus: res.status as 'none' | 'pending' | 'accepted' | 'rejected',
               socialRequestedBy: action === 'send' ? currentUser.id : prev.socialRequestedBy,
             }
           : null

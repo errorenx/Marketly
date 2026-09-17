@@ -72,12 +72,7 @@ export const SearchView: React.FC<SearchViewProps> = ({
 
       setProducts(prodRes.products || []);
 
-      // ROLE FILTER FOR PEOPLE:
-      // If currentUser is SOCIAL: can NEVER see Buyer content!
       const filteredUsers = (userRes.users || []).filter((u) => {
-        if (currentUser.role === 'SOCIAL' && u.role === 'BUYER') {
-          return false;
-        }
         if (query) {
           const q = query.toLowerCase();
           const matchName = `${u.firstName} ${u.lastName}`.toLowerCase().includes(q);
@@ -346,8 +341,6 @@ export const SearchView: React.FC<SearchViewProps> = ({
                           <span className={`text-[9px] font-extrabold uppercase px-1.5 py-0.2 rounded border ${
                             u.role === 'SELLER'
                               ? 'bg-violet-500/20 text-violet-300 border-violet-500/30'
-                              : u.role === 'BUYER'
-                              ? 'bg-indigo-500/20 text-indigo-300 border-indigo-500/30'
                               : 'bg-sky-500/20 text-sky-300 border-sky-500/30'
                           }`}>
                             {u.role}

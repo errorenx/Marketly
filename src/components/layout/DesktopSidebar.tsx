@@ -67,8 +67,6 @@ export const DesktopSidebar: React.FC<DesktopSidebarProps> = ({
           <span className={`text-[10px] font-extrabold px-2 py-0.5 rounded-full border shrink-0 ${
             currentUser.role === 'SELLER'
               ? 'bg-violet-500/20 text-violet-300 border-violet-500/30'
-              : currentUser.role === 'BUYER'
-              ? 'bg-indigo-500/20 text-indigo-300 border-indigo-500/30'
               : currentUser.role === 'ADMIN'
               ? 'bg-amber-500/20 text-amber-300 border-amber-500/30'
               : 'bg-sky-500/20 text-sky-300 border-sky-500/30'

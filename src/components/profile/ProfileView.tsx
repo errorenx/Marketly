@@ -118,8 +118,6 @@ export const ProfileView: React.FC<ProfileViewProps> = ({
             <span className={`absolute -bottom-2 left-1/2 -translate-x-1/2 px-2.5 py-0.5 rounded-full text-[10px] font-extrabold tracking-wider border shadow-md ${
               profileUser.role === 'SELLER'
                 ? 'bg-violet-600 text-white border-violet-400'
-                : profileUser.role === 'BUYER'
-                ? 'bg-indigo-600 text-white border-indigo-400'
                 : 'bg-sky-600 text-white border-sky-400'
             }`}>
               {profileUser.role}

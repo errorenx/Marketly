@@ -53,12 +53,10 @@ export const CreateScreen: React.FC<CreateScreenProps> = ({
   // POST CREATION STATE
   // -------------------------------------------------------------
   // Role-based destination rules:
-  // - Seller: SELLER or SOCIAL (BUYER forbidden)
-  // - Buyer: BUYER or SOCIAL (SELLER forbidden)
-  // - Social: SOCIAL only (BUYER and SELLER forbidden)
+  // - Seller: SELLER or SOCIAL
+  // - Social: SOCIAL only
   const getAllowedDestinations = (): ContentType[] => {
     if (currentUser.role === 'SELLER') return ['seller', 'social'];
-    if (currentUser.role === 'BUYER') return ['buyer', 'social'];
     return ['social'];
   };
 
@@ -326,10 +324,6 @@ export const CreateScreen: React.FC<CreateScreenProps> = ({
     // Role validation
     if (currentUser.role === 'SELLER' && !['seller', 'social'].includes(selectedDestination)) {
       setPublishError('Sellers can only publish to SELLER or SOCIAL.');
-      return;
-    }
-    if (currentUser.role === 'BUYER' && !['buyer', 'social'].includes(selectedDestination)) {
-      setPublishError('Buyers can only publish to BUYER or SOCIAL.');
       return;
     }
     if (currentUser.role === 'SOCIAL' && selectedDestination !== 'social') {
@@ -942,15 +936,11 @@ export const CreateScreen: React.FC<CreateScreenProps> = ({
                       className={`w-10 h-10 rounded-xl flex items-center justify-center ${
                         dest === 'seller'
                           ? 'bg-violet-600 text-white'
-                          : dest === 'buyer'
-                          ? 'bg-indigo-600 text-white'
                           : 'bg-sky-600 text-white'
                       }`}
                     >
                       {dest === 'seller' ? (
                         <Store className="w-5 h-5" />
-                      ) : dest === 'buyer' ? (
-                        <ShoppingBag className="w-5 h-5" />
                       ) : (
                         <Users className="w-5 h-5" />
                       )}
@@ -962,8 +952,6 @@ export const CreateScreen: React.FC<CreateScreenProps> = ({
                       <p className="text-xs text-slate-400">
                         {dest === 'seller'
                           ? 'Commercial product showcases and seller inventory with COD checkout.'
-                          : dest === 'buyer'
-                          ? 'Product reviews, unboxing impressions, and purchase feedback.'
                           : 'Community, lifestyle, thoughts, and discussions.'}
                       </p>
                     </div>

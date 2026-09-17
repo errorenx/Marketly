@@ -1,4 +1,4 @@
-export type UserRole = 'SELLER' | 'BUYER' | 'SOCIAL' | 'ADMIN';
+export type UserRole = 'SELLER' | 'SOCIAL' | 'ADMIN';
 export type Language = 'en' | 'ur';
 
 export interface PrivacySettings {
@@ -24,6 +24,7 @@ export interface User {
   lastName: string;
   username: string;
   email: string; // Private
+  phone?: string;
   role: UserRole;
   avatar: string;
   bio: string;
@@ -102,7 +103,7 @@ export interface Product {
   createdAt: string;
 }
 
-export type ContentType = 'seller' | 'buyer' | 'social';
+export type ContentType = 'seller' | 'social';
 
 export interface Comment {
   id: string;
@@ -190,7 +191,7 @@ export interface GroupMeta {
   id?: string;
   name: string;
   description: string;
-  photo: string;
+  photo?: string;
   creatorId?: string;
   adminIds: string[];
   memberIds: string[];
@@ -243,7 +244,7 @@ export interface ChannelItem {
 
 export interface Conversation {
   id: string;
-  type: 'social' | 'seller';
+  type: 'social' | 'seller' | 'group' | 'channel';
   participantIds: string[];
   participants: {
     id: string;
