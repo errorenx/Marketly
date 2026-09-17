@@ -1,0 +1,21 @@
+import {StrictMode} from 'react';
+import {createRoot} from 'react-dom/client';
+import App from './App.tsx';
+import { I18nProvider } from './i18n/I18nContext';
+import { ThemeProvider } from './context/ThemeContext';
+import { ErrorBoundary } from './components/common/ErrorBoundary';
+import './index.css';
+
+createRoot(document.getElementById('root')!).render(
+  <StrictMode>
+    <ErrorBoundary sectionName="Marketly">
+      <ThemeProvider>
+        <I18nProvider>
+          <App />
+        </I18nProvider>
+      </ThemeProvider>
+    </ErrorBoundary>
+  </StrictMode>,
+);
+
+

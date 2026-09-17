@@ -1,0 +1,6 @@
+{
+  "name": "Marketly",
+  "description": "Marketly - Discover. Connect. Sell. Full-featured marketplace, social media, messenger, and seller business platform with AI help.",
+  "requestFramePermissions": ["camera", "microphone"],
+  "majorCapabilities": ["MAJOR_CAPABILITY_SERVER_SIDE_GEMINI_API"]
+}

@@ -1,0 +1,255 @@
+@import "tailwindcss";
+
+@layer base {
+  body {
+    font-family: 'Plus Jakarta Sans', system-ui, -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif;
+  }
+  
+  [dir="rtl"], .font-urdu {
+    font-family: 'Noto Nastaliq Urdu', 'Plus Jakarta Sans', system-ui, sans-serif;
+  }
+}
+
+/* Custom hide scrollbar */
+.no-scrollbar::-webkit-scrollbar {
+  display: none;
+}
+.no-scrollbar {
+  -ms-overflow-style: none;
+  scrollbar-width: none;
+}
+
+/* Reel vertical snap */
+.snap-y-mandatory {
+  scroll-snap-type: y mandatory;
+}
+.snap-start-reel {
+  scroll-snap-align: start;
+  scroll-snap-stop: always;
+}
+
+/* =========================================================
+   MARKETLY THEME ENGINE: COMPLETE LIGHT / DARK MODE SUPPORT
+   ========================================================= */
+:root {
+  color-scheme: dark;
+}
+
+:root.light, [data-theme="light"] {
+  color-scheme: light;
+}
+
+/* Base Light Mode Overrides across components */
+.light body {
+  background-color: #f8fafc;
+  color: #0f172a;
+}
+
+/* =========================================================
+   PALETTE 3: MIDNIGHT OBSIDIAN & SUNSET CORAL (Default Luxury)
+   ========================================================= */
+[data-palette="obsidian_coral"]:not(.light) body {
+  background-color: #08090d;
+}
+
+[data-palette="obsidian_coral"]:not(.light) .bg-slate-950,
+[data-palette="obsidian_coral"]:not(.light) .bg-slate-950\/95,
+[data-palette="obsidian_coral"]:not(.light) .bg-slate-950\/90,
+[data-palette="obsidian_coral"]:not(.light) .bg-slate-950\/80 {
+  background-color: #08090d !important;
+}
+
+[data-palette="obsidian_coral"]:not(.light) .bg-slate-900,
+[data-palette="obsidian_coral"]:not(.light) .bg-slate-900\/95,
+[data-palette="obsidian_coral"]:not(.light) .bg-slate-900\/90,
+[data-palette="obsidian_coral"]:not(.light) .bg-slate-900\/80 {
+  background-color: #0e111a !important;
+}
+
+[data-palette="obsidian_coral"]:not(.light) .bg-slate-850,
+[data-palette="obsidian_coral"]:not(.light) .bg-slate-800,
+[data-palette="obsidian_coral"]:not(.light) .bg-slate-800\/80 {
+  background-color: #141824 !important;
+}
+
+[data-palette="obsidian_coral"] .from-violet-600.to-indigo-600,
+[data-palette="obsidian_coral"] .from-violet-600.via-indigo-600.to-sky-500,
+[data-palette="obsidian_coral"] .from-violet-600.to-indigo-500,
+[data-palette="obsidian_coral"] .bg-violet-600 {
+  background-image: linear-gradient(to right, #f43f5e, #ea580c) !important;
+  background-color: #f43f5e !important;
+}
+
+[data-palette="obsidian_coral"] .bg-violet-600\/20,
+[data-palette="obsidian_coral"] .bg-violet-600\/15 {
+  background-color: rgba(244, 63, 94, 0.18) !important;
+}
+
+[data-palette="obsidian_coral"] .border-violet-500,
+[data-palette="obsidian_coral"] .border-violet-500\/30,
+[data-palette="obsidian_coral"] .border-violet-500\/50 {
+  border-color: rgba(244, 63, 94, 0.45) !important;
+}
+
+[data-palette="obsidian_coral"] .text-violet-300,
+[data-palette="obsidian_coral"] .text-violet-400 {
+  color: #fb7185 !important;
+}
+
+[data-palette="obsidian_coral"] .ring-violet-500 {
+  --tw-ring-color: #f43f5e !important;
+}
+
+/* =========================================================
+   PALETTE 2: EMERALD OASIS & ROYAL GOLD
+   ========================================================= */
+[data-palette="emerald_oasis"] .from-violet-600.to-indigo-600,
+[data-palette="emerald_oasis"] .bg-violet-600 {
+  background-image: linear-gradient(to right, #059669, #d97706) !important;
+  background-color: #059669 !important;
+}
+[data-palette="emerald_oasis"] .text-violet-300,
+[data-palette="emerald_oasis"] .text-violet-400 {
+  color: #34d399 !important;
+}
+[data-palette="emerald_oasis"] .border-violet-500 {
+  border-color: #059669 !important;
+}
+
+/* =========================================================
+   PALETTE 4: ROYAL SAPPHIRE & CYAN
+   ========================================================= */
+[data-palette="royal_sapphire"] .from-violet-600.to-indigo-600,
+[data-palette="royal_sapphire"] .bg-violet-600 {
+  background-image: linear-gradient(to right, #2563eb, #06b6d4) !important;
+  background-color: #2563eb !important;
+}
+[data-palette="royal_sapphire"] .text-violet-300,
+[data-palette="royal_sapphire"] .text-violet-400 {
+  color: #38bdf8 !important;
+}
+[data-palette="royal_sapphire"] .border-violet-500 {
+  border-color: #2563eb !important;
+}
+
+/* =========================================================
+   PALETTE 6: VELVET PLUM & ROSE GOLD
+   ========================================================= */
+[data-palette="velvet_plum"] .from-violet-600.to-indigo-600,
+[data-palette="velvet_plum"] .bg-violet-600 {
+  background-image: linear-gradient(to right, #9333ea, #e11d48) !important;
+  background-color: #9333ea !important;
+}
+[data-palette="velvet_plum"] .text-violet-300,
+[data-palette="velvet_plum"] .text-violet-400 {
+  color: #c084fc !important;
+}
+
+/* Surface backgrounds */
+.light .bg-slate-950,
+.light .bg-slate-950\/95,
+.light .bg-slate-950\/90,
+.light .bg-slate-950\/85,
+.light .bg-slate-950\/80,
+.light .bg-slate-950\/60 {
+  background-color: #f8fafc !important;
+}
+
+.light .bg-slate-900,
+.light .bg-slate-900\/95,
+.light .bg-slate-900\/90,
+.light .bg-slate-900\/80,
+.light .bg-slate-900\/70,
+.light .bg-slate-900\/60,
+.light .bg-slate-900\/50 {
+  background-color: #ffffff !important;
+}
+
+.light .bg-slate-850,
+.light .bg-slate-800,
+.light .bg-slate-800\/90,
+.light .bg-slate-800\/80,
+.light .bg-slate-800\/60,
+.light .bg-slate-800\/50 {
+  background-color: #f1f5f9 !important;
+}
+
+/* Borders */
+.light .border-slate-800,
+.light .border-slate-800\/80,
+.light .border-slate-800\/60,
+.light .border-slate-800\/40,
+.light .border-slate-700,
+.light .border-slate-700\/80,
+.light .border-slate-700\/60,
+.light .border-slate-700\/50 {
+  border-color: #e2e8f0 !important;
+}
+
+/* Text Hierarchy */
+.light .text-white {
+  color: #0f172a !important;
+}
+
+.light .text-slate-100 {
+  color: #1e293b !important;
+}
+
+.light .text-slate-200 {
+  color: #334155 !important;
+}
+
+.light .text-slate-300 {
+  color: #475569 !important;
+}
+
+.light .text-slate-400 {
+  color: #64748b !important;
+}
+
+.light .text-slate-500 {
+  color: #94a3b8 !important;
+}
+
+/* Preserving Accent & Button Text Legibility */
+.light .bg-gradient-to-r,
+.light .bg-gradient-to-tr,
+.light .bg-violet-600,
+.light .bg-indigo-600,
+.light .bg-emerald-600,
+.light .bg-rose-600,
+.light .bg-amber-600,
+.light button.bg-violet-600,
+.light button.bg-emerald-600,
+.light button.bg-rose-600,
+.light [class*="from-violet-600"] {
+  color: #ffffff !important;
+}
+
+.light .bg-violet-600 *,
+.light .bg-emerald-600 *,
+.light .bg-rose-600 *,
+.light [class*="from-violet-600"] * {
+  color: #ffffff !important;
+}
+
+/* Inputs & Form Controls */
+.light input:not([type="checkbox"]):not([type="radio"]),
+.light textarea,
+.light select {
+  background-color: #ffffff !important;
+  color: #0f172a !important;
+  border-color: #cbd5e1 !important;
+}
+
+.light input::placeholder,
+.light textarea::placeholder {
+  color: #94a3b8 !important;
+}
+
+/* Subtle Cards & Shadows */
+.light .shadow-2xl,
+.light .shadow-xl {
+  box-shadow: 0 10px 25px -5px rgba(15, 23, 42, 0.08), 0 8px 10px -6px rgba(15, 23, 42, 0.05) !important;
+}
+
